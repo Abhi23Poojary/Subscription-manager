@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   User, Mail, Lock, Calendar, Users, ArrowRight,
@@ -8,6 +9,7 @@ import {
 } from "lucide-react";
 
 export default function App() {
+  const router = useRouter();
   const dropdownRef = useRef(null);
 
   const [user, setUser] = useState({
@@ -60,26 +62,77 @@ export default function App() {
     setUser({ ...user, dob: formatted });
   };
 
-  const handleSignup = (e) => {
+  // Convert DD/MM/YYYY → ISO date string for backend
+  const parseDOB = (dob) => {
+    const [dd, mm, yyyy] = dob.split("/");
+    if (!dd || !mm || !yyyy) return null;
+    const date = new Date(`${yyyy}-${mm}-${dd}`);
+    return isNaN(date.getTime()) ? null : date.toISOString();
+  };
+
+  // ── REPLACED: now calls real API ─────────────────────────────────────────
+  const handleSignup = async (e) => {
     e.preventDefault();
     setError("");
 
+    // Client-side validation
     if (user.password !== user.confirmPassword) {
       setError("Passwords do not match");
       return;
     }
-
+    if (user.password.length < 6) {
+      setError("Password must be at least 6 characters");
+      return;
+    }
     if (user.dob.length < 10) {
-      setError("Enter valid DOB");
+      setError("Enter a valid date of birth (DD/MM/YYYY)");
+      return;
+    }
+    if (!user.gender) {
+      setError("Please select your gender");
+      return;
+    }
+
+    const dobISO = parseDOB(user.dob);
+    if (!dobISO) {
+      setError("Invalid date of birth");
       return;
     }
 
     setStatus("loading");
-    setTimeout(() => {
+
+    try {
+      const res = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name:     user.name.trim(),
+          username: user.username.trim(),
+          email:    user.email.trim(),
+          password: user.password,
+          dob:      dobISO,
+          gender:   user.gender,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || "Sign up failed. Please try again.");
+        setStatus("idle");
+        return;
+      }
+
+      // Show success state briefly, then redirect
       setStatus("success");
-      setTimeout(() => setStatus("idle"), 3000);
-    }, 1500);
+      setTimeout(() => router.push("/dashboard"), 1200);
+
+    } catch {
+      setError("Network error. Please check your connection.");
+      setStatus("idle");
+    }
   };
+  // ─────────────────────────────────────────────────────────────────────────
 
   const inputContainer = "relative group";
   const icon = "absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 group-focus-within:text-blue-400 z-20 transition-colors";
@@ -272,9 +325,11 @@ export default function App() {
           <motion.button 
             whileHover={{ scale: 1.01 }}
             whileTap={{ scale: 0.99 }}
+            type="submit"
+            disabled={status === "loading" || status === "success"}
             className={`w-full mt-8 py-3.5 rounded-2xl font-bold flex justify-center items-center gap-2 transition-all shadow-xl ${
               status === "success" ? "bg-emerald-500" : "bg-blue-600 hover:bg-blue-500 shadow-blue-600/20"
-            } text-white`}
+            } text-white disabled:opacity-70 disabled:cursor-not-allowed`}
           >
             {status === "loading" ? (
               <Loader2 className="animate-spin w-5 h-5"/> 
