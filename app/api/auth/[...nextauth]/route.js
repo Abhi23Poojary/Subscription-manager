@@ -1,100 +1,133 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import AppleProvider  from "next-auth/providers/apple";
+import AppleProvider from "next-auth/providers/apple";
 import connectDB from "@/lib/mongodb";
 import User from "@/models/User";
 
+const providers = [];
+
+// Google
+if (
+    process.env.GOOGLE_CLIENT_ID &&
+    process.env.GOOGLE_CLIENT_SECRET
+) {
+    providers.push(
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        })
+    );
+}
+
+// Apple (only if configured)
+if (
+    process.env.APPLE_ID &&
+    process.env.APPLE_TEAM_ID &&
+    process.env.APPLE_PRIVATE_KEY &&
+    process.env.APPLE_KEY_ID
+) {
+    providers.push(
+        AppleProvider({
+            clientId: process.env.APPLE_ID,
+            clientSecret: {
+                appleId: process.env.APPLE_ID,
+                teamId: process.env.APPLE_TEAM_ID,
+                privateKey: process.env.APPLE_PRIVATE_KEY,
+                keyId: process.env.APPLE_KEY_ID,
+            },
+        })
+    );
+}
+
 const handler = NextAuth({
-  secret: process.env.NEXTAUTH_SECRET,
+    secret: process.env.NEXTAUTH_SECRET,
+    providers,
 
-  providers: [
-    GoogleProvider({
-      clientId:     process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    }),
+    callbacks: {
+        async signIn({ user }) {
+            try {
+                await connectDB();
 
-    AppleProvider({
-      clientId:     process.env.APPLE_ID,
-      clientSecret: {
-        appleId:     process.env.APPLE_ID,
-        teamId:      process.env.APPLE_TEAM_ID,
-        privateKey:  process.env.APPLE_PRIVATE_KEY,
-        keyId:       process.env.APPLE_KEY_ID,
-      },
-    }),
-  ],
+                if (!user?.email) return false;
 
-  callbacks: {
-    // ── Called after a successful OAuth sign-in ──────────────────────────
-    async signIn({ user, account }) {
-      try {
-        await connectDB();
+                const email = user.email.toLowerCase();
+                let existingUser = await User.findOne({ email });
 
-        const existingUser = await User.findOne({ email: user.email.toLowerCase() });
+                if (!existingUser) {
+                    const baseUsername = email
+                        .split("@")[0]
+                        .replace(/[^a-z0-9]/gi, "")
+                        .toLowerCase();
 
-        if (!existingUser) {
-          // Auto-create account for new OAuth users
-          await User.create({
-            name:     user.name  || "User",
-            username: user.email.split("@")[0].toLowerCase().replace(/[^a-z0-9]/g, "") + Math.floor(Math.random() * 1000),
-            email:    user.email.toLowerCase(),
-            password: `oauth_${account.providerAccountId}_${Date.now()}`, // non-usable placeholder
-            gender:   "",
-            dob:      null,
-            avatar:   user.image || "",
-          });
-        } else if (!existingUser.avatar && user.image) {
-          // Update avatar if missing
-          existingUser.avatar = user.image;
-          await existingUser.save();
-        }
+                    let username = baseUsername;
+                    let count = 0;
 
-        return true;
-      } catch (error) {
-        console.error("OAuth signIn callback error:", error);
-        return false;
-      }
+                    while (await User.findOne({ username })) {
+                        count++;
+                        username = `${baseUsername}${count}`;
+                    }
+
+                    await User.create({
+                        name: user.name || "User",
+                        username,
+                        email,
+                        password: `oauth_${Date.now()}`,
+                        gender: "",
+                        dob: null,
+                        avatar: user.image || "",
+                    });
+                }
+
+                return true;
+            } catch (error) {
+                console.error("OAuth signIn callback error:", error);
+
+                // TEMPORARY: still allow login
+                return true;
+            }
+        },
+
+        async jwt({ token }) {
+            try {
+                if (token?.email) {
+                    await connectDB();
+                    const dbUser = await User.findOne({
+                        email: token.email.toLowerCase(),
+                    });
+
+                    if (dbUser) {
+                        token.id = dbUser._id.toString();
+                        token.username = dbUser.username;
+                        token.avatar = dbUser.avatar;
+                    }
+                }
+            } catch (error) {
+                console.error("JWT callback error:", error);
+            }
+
+            return token;
+        },
+
+        async session({ session, token }) {
+            if (session?.user) {
+                session.user.id = token.id;
+                session.user.username = token.username;
+                session.user.avatar = token.avatar;
+            }
+
+            return session;
+        },
     },
 
-    // ── Attach our MongoDB user ID to the JWT ────────────────────────────
-    async jwt({ token, user, account }) {
-      if (account) {
-        // First sign-in — fetch our DB user and attach their _id
-        try {
-          await connectDB();
-          const dbUser = await User.findOne({ email: token.email.toLowerCase() });
-          if (dbUser) {
-            token.id       = dbUser._id.toString();
-            token.username = dbUser.username;
-            token.avatar   = dbUser.avatar;
-          }
-        } catch (error) {
-          console.error("JWT callback error:", error);
-        }
-      }
-      return token;
+    pages: {
+        signIn: "/signin",
+        error: "/signin",
     },
 
-    // ── Expose our fields in the session object ──────────────────────────
-    async session({ session, token }) {
-      if (token) {
-        session.user.id       = token.id;
-        session.user.username = token.username;
-        session.user.avatar   = token.avatar;
-      }
-      return session;
+    session: {
+        strategy: "jwt",
+        maxAge: 7 * 24 * 60 * 60,
     },
-  },
-
-  pages: {
-    signIn:    "/signin",   // redirect here if unauthenticated
-    error:     "/signin",   // redirect here on OAuth error
-  },
-
-  session: {
-    strategy: "jwt",
-    maxAge:   7 * 24 * 60 * 60, // 7 days
-  },
 });
 
 export { handler as GET, handler as POST };

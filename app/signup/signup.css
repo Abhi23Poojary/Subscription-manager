@@ -1,0 +1,191 @@
+/* --- 1. GLOBAL WRAPPER & BACKGROUND --- */
+.pageWrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #050507;
+  position: relative;
+  overflow: hidden;
+  font-family: sans-serif;
+}
+
+/* Background decorative blurs */
+.backgroundGlow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.glowTop {
+  position: absolute;
+  top: -10%;
+  left: -5%;
+  width: 500px;
+  height: 500px;
+  background: rgba(37, 99, 235, 0.1);
+  filter: blur(120px);
+}
+
+.glowBottom {
+  position: absolute;
+  bottom: -10%;
+  right: -5%;
+  width: 400px;
+  height: 400px;
+  background: rgba(79, 70, 229, 0.1);
+  filter: blur(120px);
+}
+
+/* --- 2. SIGNUP CARD --- */
+.formCard {
+  z-index: 10;
+  width: 100%;
+  max-width: 440px; /* Slightly wider for longer forms */
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 40px;
+  backdrop-filter: blur(25px);
+  animation: fadeInSlide 0.6s ease-out;
+}
+
+@keyframes fadeInSlide {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.title {
+  color: white;
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: #6b7280;
+  text-align: center;
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+/* --- 3. INPUT FIELDS --- */
+.inputGroup {
+  position: relative;
+  margin-bottom: 15px; /* Tighter spacing for more fields */
+}
+
+.inputIcon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #4b5563;
+}
+
+.inputField {
+  width: 100%;
+  padding: 12px 44px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  color: white;
+  font-size: 14px;
+  outline: none;
+  transition: 0.3s;
+}
+
+.inputField:focus {
+  border-color: #3b82f6;
+}
+
+.viewToggle {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #4b5563;
+  cursor: pointer;
+}
+
+/* --- 4. BUTTONS --- */
+.signUpBtn {
+  width: 100%;
+  margin-top: 20px;
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  background: #2563eb;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.signUpBtn:hover {
+  background: #3b82f6;
+}
+
+.errorBox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #f87171;
+  font-size: 12px;
+  padding: 10px;
+  background: rgba(239, 68, 68, 0.1);
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+/* --- 5. SOCIAL LOGINS --- */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin: 25px 0;
+}
+
+.line {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  flex: 1;
+}
+
+.dividerText {
+  color: #4b5563;
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+.socialGrid {
+  display: flex;
+  gap: 12px;
+}
+
+.socialBtn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.socialIcon {
+  width: 18px;
+  height: 18px;
+}
