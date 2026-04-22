@@ -1,17 +1,10 @@
 "use client";
-<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { User, Mail, Lock, ArrowRight, Loader2, CheckCircle2, AlertCircle, Apple, Eye, EyeOff } from "lucide-react";
 
 import { signIn } from "next-auth/react";
 
-=======
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import { User, Mail, Lock, ArrowRight, Loader2, CheckCircle2, AlertCircle, Apple, Eye, EyeOff } from "lucide-react";
-
->>>>>>> 36a897d4c084dd9b8fa6f8b63d371a9133886098
 // Importing the signup css
 import "./signup.css";
 
@@ -29,7 +22,6 @@ export default function SignupPage() {
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState("");
 
-<<<<<<< HEAD
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const err = urlParams.get('error');
@@ -37,9 +29,6 @@ export default function SignupPage() {
   }, []);
 
   const handleSignup = async (e) => {
-=======
-  const handleSignup = (e) => {
->>>>>>> 36a897d4c084dd9b8fa6f8b63d371a9133886098
     e.preventDefault();
     setError("");
 
@@ -50,7 +39,6 @@ export default function SignupPage() {
 
     setStatus("loading");
     
-<<<<<<< HEAD
     try {
       const res = await fetch("/api/auth/signup", {
         method: "POST",
@@ -71,13 +59,6 @@ export default function SignupPage() {
       setError(err.message);
       setStatus("idle");
     }
-=======
-    // Simulate API Call
-    setTimeout(() => {
-      setStatus("success");
-      setTimeout(() => router.push("/login"), 1500);
-    }, 1500);
->>>>>>> 36a897d4c084dd9b8fa6f8b63d371a9133886098
   };
 
   return (
@@ -170,11 +151,7 @@ export default function SignupPage() {
           </div>
 
           <div className="socialGrid">
-<<<<<<< HEAD
             <button type="button" className="socialBtn" onClick={() => signIn("google", { callbackUrl: "/api/sync-user" })}>
-=======
-            <button type="button" className="socialBtn">
->>>>>>> 36a897d4c084dd9b8fa6f8b63d371a9133886098
               <svg className="socialIcon" viewBox="0 0 24 24">
                 <path fill="#EA4335" d="M5.266 9.765A7.077 7.077 0 0 1 12 4.909c1.69 0 3.218.6 4.418 1.582L19.91 3C17.782 1.145 15.055 0 12 0 7.27 0 3.198 2.698 1.24 6.65l4.026 3.115Z" />
                 <path fill="#34A853" d="M16.04 18.013c-1.09.303-2.23.477-3.414.477a7.086 7.086 0 0 1-7.36-4.84L1.24 16.765C3.198 20.717 7.27 23.415 12 23.415c2.972 0 5.711-1.01 7.82-2.731l-3.78-2.671Z" />
@@ -189,11 +166,7 @@ export default function SignupPage() {
           <div style={{ marginTop: '25px', textAlign: 'center' }}>
             <p style={{ color: '#6b7280', fontSize: '14px' }}>
               Already have an account?{" "}
-<<<<<<< HEAD
               <span onClick={() => router.push("/signin")} style={{ color: '#60a5fa', cursor: 'pointer', fontWeight: '600' }}>Log In</span>
-=======
-              <span onClick={() => router.push("/login")} style={{ color: '#60a5fa', cursor: 'pointer', fontWeight: '600' }}>Log In</span>
->>>>>>> 36a897d4c084dd9b8fa6f8b63d371a9133886098
             </p>
           </div>
         </form>
