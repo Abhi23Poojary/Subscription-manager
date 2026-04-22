@@ -1,0 +1,395 @@
+/* --- 1. CORE LAYOUT & FONTS --- */
+.homeWrapper {
+  min-height: 100vh;
+  background-color: #050507;
+  color: white;
+  overflow-x: hidden;
+  font-family: "Geist", "Geist Fallback", sans-serif;
+  position: relative;
+  scroll-behavior: smooth; /* Smooth scrolling when clicking nav links */
+}
+
+.max7xl {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.bgFixed {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glowTop {
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 70%);
+  filter: blur(120px);
+}
+
+/* --- 2. NAVIGATION --- */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  background: rgba(5, 5, 7, 0.4);
+}
+
+.navContent {
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logoArea {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logoBox {
+  width: 2.5rem;
+  height: 2.5rem;
+  background: #3b82f6;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoText {
+  font-size: 1.5rem;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: -1.5px;
+  text-transform: uppercase;
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.navLinks a {
+  color: #9ca3af;
+  text-decoration: none;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.navAuth {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.signUpTextBtn {
+  background: none;
+  border: none;
+  color: white;
+  font-weight: 800;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.signInPill {
+  background: white;
+  color: black;
+  padding: 0.6rem 1.4rem;
+  border-radius: 2rem;
+  font-weight: 800;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+/* --- 3. HERO SECTION --- */
+.heroSection {
+  position: relative;
+  z-index: 10;
+  padding-top: 10rem;
+  padding-bottom: 10rem;
+  text-align: center;
+}
+
+.heroTitle {
+  font-size: 96px;
+  font-weight: 900;
+  line-height: 101px;
+  letter-spacing: -4px;
+  margin-bottom: 2rem;
+  color: white;
+}
+
+.gradientText {
+  background: linear-gradient(to right, #3b82f6, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.heroDesc {
+  color: #9ca3af;
+  font-size: 1.25rem;
+  max-width: 42rem;
+  margin: 0 auto 5.1rem;
+  line-height: 1.5;
+}
+
+.heroBtnGroup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* --- 4. PLATFORMS HUB --- */
+.platformsHeader {
+  margin-top: 8rem;
+  margin-bottom: 3rem;
+  scroll-margin-top: 6rem; /* Ensures the header isn't hidden behind the sticky navbar */
+}
+
+.unifiedHub {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 3.5rem;
+  background: rgba(255, 255, 255, 0.02);
+  padding: 4rem;
+  border-radius: 3rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.platformItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.platformIconBox {
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 1.25rem;
+  background: #0a0a0c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.platformLabel {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #4b5563;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* --- 5. GRID SECTIONS (Features & Security) --- */
+.sectionContainer {
+  position: relative;
+  z-index: 10;
+  padding: 2rem 0;
+  scroll-margin-top: 5rem;
+}
+
+.sectionDark { background-color: #08080a; }
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+.sectionHeader h2 {
+  font-size: 3rem;
+  font-weight: 900;
+  letter-spacing: -2px;
+}
+
+.flexGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.card {
+  flex: 1 1 calc(33.333% - 2rem);
+  min-width: 300px;
+  padding: 2.5rem;
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 2rem;
+}
+
+.cardIcon { margin-bottom: 1.5rem; }
+.cardTitle { font-size: 1.25rem; font-weight: 800; margin-bottom: 0.75rem; }
+.cardDesc { color: #6b7280; font-size: 0.95rem; line-height: 1.5; }
+
+/* --- 6. BANNERS (Trust) --- */
+.trustBanner {
+  margin-top: 6rem;
+  padding: 4rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 2.5rem;
+}
+
+.trustContent {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.trustIcon {
+  width: 4rem;
+  height: 4rem;
+  background: rgba(37, 99, 235, 0.1);
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  border-radius: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.trustText h3 { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.25rem; }
+.trustText p { color: #6b7280; font-size: 0.9rem; }
+
+.badgeRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.miniBadge {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #9ca3af;
+}
+
+/* --- 7. BUTTONS --- */
+.btnPrimary {
+  background: #2563eb;
+  color: white;
+  padding: 1.1rem 2.2rem;
+  border-radius: 1.1rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.btnSecondary {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: 1.1rem 2.2rem;
+  border-radius: 1.1rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+/* --- 8. FOOTER --- */
+.footer {
+  position: relative;
+  z-index: 10;
+  padding: 3rem 1.5rem; /* py-12 px-6 */
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.footerContent {
+  max-width: 1280px; /* max-w-7xl */
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* Desktop row layout */
+@media (min-width: 768px) {
+  .footerContent {
+    flex-direction: row;
+  }
+}
+
+.footerLogo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0.5;
+  filter: grayscale(100%);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.footerLogo:hover {
+  opacity: 1;
+  filter: grayscale(0%);
+}
+
+.footerLogoText {
+  font-weight: bold;
+  letter-spacing: -0.05em; /* tracking-tighter */
+  text-transform: uppercase;
+  font-style: italic;
+}
+
+.footerCopyright {
+  color: #4b5563; /* text-gray-600 */
+  font-size: 0.75rem; /* text-xs */
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.2em; /* tracking-[0.2em] */
+  text-align: center;
+}
+
+.footerSocials {
+  display: flex;
+  gap: 1.5rem;
+  color: #6b7280; /* text-gray-500 */
+  align-items: center;
+}
+
+.footerSocials a {
+  color: inherit;
+  transition: color 0.2s ease;
+}
+
+.footerSocials a:hover {
+  color: white;
+}
