@@ -28,7 +28,11 @@ const UserSchema = new mongoose.Schema(
     },
     password: {
       type: String,
+<<<<<<< HEAD
       required: false,
+=======
+      required: [true, 'Password is required'],
+>>>>>>> 36a897d4c084dd9b8fa6f8b63d371a9133886098
       minlength: [6, 'Password must be at least 6 characters'],
       select: false,
     },
@@ -45,18 +49,28 @@ const UserSchema = new mongoose.Schema(
       type: String,
       default: '',
     },
+<<<<<<< HEAD
     budgetLimit: {
       type: Number,
       default: 0,
     },
+=======
+>>>>>>> 36a897d4c084dd9b8fa6f8b63d371a9133886098
   },
   { timestamps: true }
 );
 
 // Hash password before saving
+<<<<<<< HEAD
 UserSchema.pre('save', async function () {
   if (!this.isModified('password') || !this.password) return;
   this.password = await bcrypt.hash(this.password, 12);
+=======
+UserSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) return next();
+  this.password = await bcrypt.hash(this.password, 12);
+  next();
+>>>>>>> 36a897d4c084dd9b8fa6f8b63d371a9133886098
 });
 
 // Compare entered password with stored hash

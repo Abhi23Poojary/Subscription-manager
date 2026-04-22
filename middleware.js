@@ -1,10 +1,18 @@
 import { NextResponse } from 'next/server';
+<<<<<<< HEAD
 import { verifyToken } from '@/lib/auth';
+=======
+import { verifyToken } from './lib/auth';
+>>>>>>> 36a897d4c084dd9b8fa6f8b63d371a9133886098
 
 // Routes that don't require authentication
 const PUBLIC_ROUTES = ['/home', '/signin', '/signup', '/'];
 
+<<<<<<< HEAD
 export async function middleware(request) {
+=======
+export function middleware(request) {
+>>>>>>> 36a897d4c084dd9b8fa6f8b63d371a9133886098
   const { pathname } = request.nextUrl;
 
   // Allow public routes and API auth routes
@@ -23,7 +31,11 @@ export async function middleware(request) {
     return NextResponse.redirect(new URL('/signin', request.url));
   }
 
+<<<<<<< HEAD
   const decoded = await verifyToken(token);
+=======
+  const decoded = verifyToken(token);
+>>>>>>> 36a897d4c084dd9b8fa6f8b63d371a9133886098
   if (!decoded) {
     const response = NextResponse.redirect(new URL('/signin', request.url));
     response.cookies.delete('auth_token');

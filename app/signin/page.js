@@ -1,9 +1,15 @@
 "use client";
+<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { User, Lock, ArrowRight, Loader2, CheckCircle2, AlertCircle, Apple, Eye, EyeOff } from "lucide-react";
 
 import { signIn } from "next-auth/react";
+=======
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { User, Lock, ArrowRight, Loader2, CheckCircle2, Apple, Eye, EyeOff } from "lucide-react";
+>>>>>>> 36a897d4c084dd9b8fa6f8b63d371a9133886098
 
 // Standard CSS import
 import "./signin.css";
@@ -13,6 +19,7 @@ export default function LoginPage() {
   const [credentials, setCredentials] = useState({ identifier: "", password: "" });
   const [showPass, setShowPass] = useState(false);
   const [status, setStatus] = useState("idle");
+<<<<<<< HEAD
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -45,6 +52,16 @@ export default function LoginPage() {
       setError(err.message);
       setStatus("idle");
     }
+=======
+
+  const handleSignin = (e) => {
+    e.preventDefault();
+    setStatus("loading");
+    setTimeout(() => {
+      setStatus("success");
+      setTimeout(() => router.push("/dashboard"), 1200);
+    }, 1500);
+>>>>>>> 36a897d4c084dd9b8fa6f8b63d371a9133886098
   };
 
   return (
@@ -59,12 +76,15 @@ export default function LoginPage() {
           <h1 className="title">Welcome Back</h1>
           <p className="subtitle">Please enter your details</p>
 
+<<<<<<< HEAD
           {error && (
             <div className="errorBox" style={{ color: '#ef4444', backgroundColor: '#fef2f2', padding: '10px', borderRadius: '6px', marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px' }}>
               <AlertCircle size={16} /> {error}
             </div>
           )}
 
+=======
+>>>>>>> 36a897d4c084dd9b8fa6f8b63d371a9133886098
           <div className="inputGroup">
             <User className="inputIcon" size={18} />
             <input
@@ -115,7 +135,11 @@ export default function LoginPage() {
 
           <div className="socialGrid">
             {/* Google Button with Icon */}
+<<<<<<< HEAD
             <button type="button" className="socialBtn" onClick={() => signIn("google", { callbackUrl: "/api/sync-user" })}>
+=======
+            <button type="button" className="socialBtn">
+>>>>>>> 36a897d4c084dd9b8fa6f8b63d371a9133886098
               <svg className="socialIcon" viewBox="0 0 24 24">
                 <path fill="#EA4335" d="M5.266 9.765A7.077 7.077 0 0 1 12 4.909c1.69 0 3.218.6 4.418 1.582L19.91 3C17.782 1.145 15.055 0 12 0 7.27 0 3.198 2.698 1.24 6.65l4.026 3.115Z" />
                 <path fill="#34A853" d="M16.04 18.013c-1.09.303-2.23.477-3.414.477a7.086 7.086 0 0 1-7.36-4.84L1.24 16.765C3.198 20.717 7.27 23.415 12 23.415c2.972 0 5.711-1.01 7.82-2.731l-3.78-2.671Z" />
