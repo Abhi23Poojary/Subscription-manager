@@ -1,0 +1,194 @@
+/* Global Light Theme Overrides (White and Dark Blue/Slate) */
+body.light-theme {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+body.light-theme main,
+body.light-theme .dashboardWrapper,
+body.light-theme .analyticsWrapper,
+body.light-theme .dealsWrapper,
+body.light-theme .pageWrapper {
+  background-color: #f8fafc !important;
+}
+
+/* Hide the dark glows in light mode */
+body.light-theme .backgroundGlow {
+  opacity: 0.15;
+}
+
+/* Sidebar */
+body.light-theme .sidebar {
+  background-color: #ffffff !important;
+  border-right: 1px solid #e2e8f0 !important;
+}
+body.light-theme .sidebarBrand {
+  background: none !important;
+  -webkit-text-fill-color: #0f172a !important;
+  color: #0f172a !important;
+}
+body.light-theme .navItem {
+  color: #64748b !important;
+}
+body.light-theme .navItem:hover {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+body.light-theme .navItem.active {
+  background-color: rgba(59, 130, 246, 0.1) !important;
+  color: #3b82f6 !important;
+  border-right-color: #3b82f6 !important;
+}
+
+/* Cards & Containers */
+body.light-theme .statCard,
+body.light-theme .chartCard,
+body.light-theme .dealCard,
+body.light-theme .pricingCard,
+body.light-theme .formCard,
+body.light-theme .notification-dropdown,
+body.light-theme .profileCard,
+body.light-theme .settingBox {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Typography */
+body.light-theme h1, 
+body.light-theme h2, 
+body.light-theme h3, 
+body.light-theme h4,
+body.light-theme .dealName, 
+body.light-theme .planName, 
+body.light-theme .amount,
+body.light-theme td,
+body.light-theme .brand {
+  color: #0f172a !important;
+}
+body.light-theme .brand {
+  -webkit-text-fill-color: #0f172a !important;
+}
+body.light-theme p, 
+body.light-theme .dealDesc, 
+body.light-theme .cycle,
+body.light-theme .featureList li,
+body.light-theme .emptyState p,
+body.light-theme label {
+  color: #64748b !important;
+}
+
+/* Dashboard Table */
+body.light-theme .subsTableWrapper {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
+}
+body.light-theme .subsTable th {
+  background-color: #f8fafc !important;
+  color: #64748b !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+}
+body.light-theme .subsTable tr {
+  border-bottom: 1px solid #e2e8f0 !important;
+}
+body.light-theme .subsTable td {
+  border-bottom: none !important;
+}
+
+/* Inputs & Search */
+body.light-theme input, 
+body.light-theme select {
+  background: #f1f5f9 !important;
+  border: 1px solid #cbd5e1 !important;
+  color: #0f172a !important;
+}
+body.light-theme input:focus, 
+body.light-theme select:focus {
+  border-color: #3b82f6 !important;
+  background: #ffffff !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+}
+body.light-theme select.inputField option {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+}
+
+/* Buttons */
+body.light-theme .subscribeBtn {
+  color: #0f172a !important;
+  background: #ffffff !important;
+  border: 1px solid #cbd5e1 !important;
+}
+body.light-theme .subscribeBtn:hover {
+  background: var(--hover-color, #3b82f6) !important;
+  color: #ffffff !important;
+  border-color: var(--hover-color, #3b82f6) !important;
+}
+body.light-theme .selectPlanBtn:not(.popularBtn) {
+  background: #f1f5f9 !important;
+  color: #0f172a !important;
+  border: 1px solid #cbd5e1 !important;
+}
+body.light-theme .selectPlanBtn:not(.popularBtn):hover {
+  background: #e2e8f0 !important;
+}
+body.light-theme .actionBtn {
+  color: #64748b !important;
+  background: #f1f5f9 !important;
+}
+body.light-theme .actionBtn:hover {
+  color: #0f172a !important;
+  background: #e2e8f0 !important;
+}
+body.light-theme .actionBtn.delete:hover {
+  color: #ef4444 !important;
+  background: rgba(239, 68, 68, 0.1) !important;
+}
+body.light-theme .backBtn {
+  background: #ffffff !important;
+  border: 1px solid #cbd5e1 !important;
+  color: #64748b !important;
+}
+body.light-theme .backBtn:hover {
+  background: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
+/* Top Navs & Headers */
+body.light-theme .topNav {
+  background: rgba(255, 255, 255, 0.8) !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+}
+
+/* Icons and Wrappers */
+body.light-theme .dealIconWrapper,
+body.light-theme .settingIcon,
+body.light-theme .iconWrapper {
+  background: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+}
+
+/* Notifications */
+body.light-theme .notification-bell {
+  background: #ffffff !important;
+  border: 1px solid #cbd5e1 !important;
+  color: #0f172a !important;
+}
+body.light-theme .notification-bell:hover {
+  background: #f1f5f9 !important;
+}
+body.light-theme .notification-header {
+  border-bottom: 1px solid #e2e8f0 !important;
+}
+body.light-theme .notification-item {
+  border-bottom: 1px solid #f1f5f9 !important;
+}
+body.light-theme .notification-item:hover {
+  background: #f8fafc !important;
+}
+
+/* Empty States */
+body.light-theme .emptyState svg {
+  color: #94a3b8 !important;
+}

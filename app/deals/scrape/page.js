@@ -148,8 +148,8 @@ function ScrapeDetailsContent() {
             </ul>
 
             <button 
-              className="selectPlanBtn" 
-              style={{ backgroundColor: plan.popular ? data.brandColor : 'rgba(255,255,255,0.05)' }}
+              className={`selectPlanBtn ${plan.popular ? 'popularBtn' : ''}`} 
+              style={plan.popular ? { backgroundColor: data.brandColor, color: '#ffffff' } : {}}
               onClick={() => window.open(data.checkoutUrl, '_blank')}
             >
               Select {plan.name}

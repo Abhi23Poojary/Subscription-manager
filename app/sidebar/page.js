@@ -1,12 +1,23 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { LayoutDashboard, PieChart, ShoppingBag, User as UserIcon } from "lucide-react";
 import "./side.css";
+import "./theme.css";
 
 export default function Sidebar() {
   const router = useRouter();
   const pathname = usePathname();
+
+  // Apply theme globally across all pages that render the Sidebar
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('app-theme') || 'dark';
+    if (savedTheme === 'light') {
+      document.body.classList.add('light-theme');
+    } else {
+      document.body.classList.remove('light-theme');
+    }
+  }, []);
 
   const navItems = [
     { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
