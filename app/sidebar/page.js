@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { LayoutDashboard, PieChart, User as UserIcon } from "lucide-react";
+import { LayoutDashboard, PieChart, ShoppingBag, User as UserIcon } from "lucide-react";
 import "./side.css";
 
 export default function Sidebar() {
@@ -11,6 +11,7 @@ export default function Sidebar() {
   const navItems = [
     { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
     { name: "Analytics", path: "/analytics", icon: PieChart },
+    { name: "Deals", path: "/deals", icon: ShoppingBag },
     { name: "Profile", path: "/profile", icon: UserIcon },
   ];
 

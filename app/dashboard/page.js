@@ -10,10 +10,12 @@ import {
   ExternalLink,
   Trash2,
   LogOut,
-  Loader2 
+  Loader2,
+  Search
 } from "lucide-react";
 import { getDashboardStats } from "@/lib/subscriptionHelpers";
 import Sidebar from "@/app/sidebar/page";
+import NotificationBell from "@/app/notifications/page";
 
 // Import matching stylesheet
 import "./dashboard.css";
@@ -24,6 +26,7 @@ export default function DashboardPage() {
   const [stats, setStats] = useState({ totalSubscriptions: 0, monthlySpend: 0, upcomingRenewals: 0 });
   const [activePlans, setActivePlans] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchSubscriptions = async () => {
@@ -79,6 +82,10 @@ export default function DashboardPage() {
     }
   };
 
+  const filteredSubscriptions = subscriptions.filter(sub => 
+    sub.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   if (loading) {
     return (
       <div className="dashboardWrapper" style={{ justifyContent: 'center', alignItems: 'center' }}>
@@ -101,14 +108,40 @@ export default function DashboardPage() {
         {/* Top Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
           <h1 style={{ fontSize: '2rem', fontWeight: 700, color: '#f8fafc', margin: 0 }}>Dashboard</h1>
-          <button 
-            onClick={handleLogout} 
-            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: 'rgba(239, 68, 68, 0.1)', color: '#ef4444', border: '1px solid rgba(239, 68, 68, 0.2)', padding: '0.5rem 1rem', borderRadius: '0.5rem', cursor: 'pointer', fontWeight: 500, transition: 'all 0.2s ease' }}
-            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(239, 68, 68, 0.2)'}
-            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(239, 68, 68, 0.1)'}
-          >
-            <LogOut size={16} /> Logout
-          </button>
+          
+          {/* Search Bar */}
+          <div style={{ position: 'relative', width: '100%', maxWidth: '400px', margin: '0 2rem' }}>
+            <Search size={18} style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
+            <input 
+              type="text"
+              placeholder="Search subscriptions..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '10px 14px 10px 42px',
+                background: 'rgba(15, 23, 42, 0.6)',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                borderRadius: '12px',
+                color: '#f8fafc',
+                fontSize: '15px',
+                outline: 'none',
+                transition: 'all 0.2s ease'
+              }}
+            />
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <NotificationBell />
+            <button 
+              onClick={handleLogout} 
+              style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: 'rgba(239, 68, 68, 0.1)', color: '#ef4444', border: '1px solid rgba(239, 68, 68, 0.2)', padding: '0.5rem 1rem', borderRadius: '0.5rem', cursor: 'pointer', fontWeight: 500, transition: 'all 0.2s ease' }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(239, 68, 68, 0.2)'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(239, 68, 68, 0.1)'}
+            >
+              <LogOut size={16} /> Logout
+            </button>
+          </div>
         </div>
 
         {/* Summary Cards */}
@@ -160,6 +193,11 @@ export default function DashboardPage() {
             <Layers size={48} color="#4b5563" style={{ margin: '0 auto 1rem auto' }} />
             <p>You haven't added any subscriptions yet.</p>
           </div>
+        ) : filteredSubscriptions.length === 0 ? (
+          <div className="emptyState">
+            <Search size={48} color="#4b5563" style={{ margin: '0 auto 1rem auto' }} />
+            <p>No subscriptions found matching "{searchQuery}".</p>
+          </div>
         ) : (
           <div className="subsTableWrapper">
             <table className="subsTable">
@@ -174,7 +212,7 @@ export default function DashboardPage() {
                 </tr>
               </thead>
               <tbody>
-                {subscriptions.map((sub) => (
+                {filteredSubscriptions.map((sub) => (
                   <tr key={sub._id}>
                     <td style={{ fontWeight: 500 }}>{sub.name}</td>
                     <td><span className={`badge badge-${sub.category}`}>{sub.category}</span></td>

@@ -1,0 +1,138 @@
+.centerContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+}
+
+.errorState {
+  color: #ef4444;
+}
+
+.errorState h2 {
+  margin: 1rem 0 0.5rem 0;
+}
+
+.errorState p {
+  color: #94a3b8;
+}
+
+.mt-4 { margin-top: 1rem; }
+
+.backLink {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  padding: 0;
+  margin-bottom: 2rem;
+  transition: color 0.2s ease;
+}
+
+.backLink:hover {
+  color: #f8fafc;
+}
+
+.scrapeHeader h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #f8fafc;
+  margin: 0 0 0.5rem 0;
+}
+
+.scrapeHeader p {
+  color: #94a3b8;
+  font-size: 1.1rem;
+  margin: 0 0 2.5rem 0;
+}
+
+.pricingGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.pricingCard {
+  background: rgba(30, 41, 59, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.pricingCard.popular {
+  background: rgba(30, 41, 59, 0.7);
+  border-color: var(--brand-color);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.3);
+}
+
+.popularBadge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: var(--brand-color);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 1rem;
+  border-bottom-left-radius: 8px;
+}
+
+.planName {
+  font-size: 1.25rem;
+  color: #cbd5e1;
+  margin: 0 0 1rem 0;
+}
+
+.planPrice .amount {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #f8fafc;
+}
+
+.planPrice .cycle {
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.featureList {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0;
+  flex-grow: 1;
+}
+
+.featureList li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #e2e8f0;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.selectPlanBtn {
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.selectPlanBtn:hover {
+  opacity: 0.9;
+}

@@ -1,0 +1,123 @@
+.notification-container {
+  position: relative;
+}
+
+.notification-bell {
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.notification-bell:hover {
+  background: rgba(30, 41, 59, 0.8);
+  color: #f8fafc;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background-color: #ef4444;
+  color: white;
+  font-size: 0.65rem;
+  font-weight: bold;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 2px solid #0f172a;
+}
+
+.notification-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 320px;
+  background: rgba(30, 41, 59, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  z-index: 50;
+}
+
+.notification-header {
+  padding: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.notification-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #f8fafc;
+}
+
+.notification-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.notification-empty {
+  padding: 2rem 1rem;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+.notification-item {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background-color 0.2s ease;
+}
+
+.notification-item:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.notification-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.notification-icon.warning {
+  background: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+}
+
+.notification-icon.success {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.notification-content h4 {
+  margin: 0 0 0.25rem 0;
+  font-size: 0.9rem;
+  color: #f1f5f9;
+}
+
+.notification-content p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #94a3b8;
+  line-height: 1.4;
+}

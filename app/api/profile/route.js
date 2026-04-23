@@ -1,66 +1,73 @@
 import { NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 import User from '@/models/User';
-import { getSessionUser } from '@/lib/auth';
+import { verifyToken } from '@/lib/auth';
 
-// GET profile
-export async function GET() {
+// Helper to reliably extract the token from cookies or headers
+function getToken(req) {
+  const cookieNames = ['token', 'auth_token', 'jwt', 'session', 'next-auth.session-token'];
+  for (const name of cookieNames) {
+    const val = req.cookies.get(name)?.value;
+    if (val) return val;
+  }
+  const authHeader = req.headers.get('authorization');
+  if (authHeader?.startsWith('Bearer ')) return authHeader.split(' ')[1];
+  return null;
+}
+
+// Fetch user profile
+export async function GET(req) {
   try {
-    const session = await getSessionUser();
-    if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-
     await connectDB();
-    const user = await User.findById(session.id).select('-password');
-    if (!user) return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    
+    const token = getToken(req);
+    if (!token) return NextResponse.json({ error: "Unauthorized - No token found in cookies" }, { status: 401 });
 
-    return NextResponse.json({ user });
+    const decoded = await verifyToken(token);
+    if (!decoded) return NextResponse.json({ error: "Unauthorized - Invalid token" }, { status: 401 });
+    
+    const userId = decoded?.userId || decoded?.id || decoded?._id || decoded?.sub;
+    if (!userId) return NextResponse.json({ error: "Unauthorized - Missing User ID" }, { status: 401 });
+
+    const user = await User.findById(userId).select('-password');
+    if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
+
+    return NextResponse.json({ user }, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    console.error(error);
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
 
-// PUT update profile
-export async function PUT(request) {
+// Update user profile
+export async function PUT(req) {
   try {
-    const session = await getSessionUser();
-    if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-
     await connectDB();
-    const { name, email, currentPassword, newPassword } = await request.json();
+    
+    const token = getToken(req);
+    if (!token) return NextResponse.json({ error: "Unauthorized - No token found in cookies" }, { status: 401 });
 
-    const user = await User.findById(session.id).select('+password');
-    if (!user) return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    const decoded = await verifyToken(token);
+    if (!decoded) return NextResponse.json({ error: "Unauthorized - Invalid token" }, { status: 401 });
+    
+    const userId = decoded?.userId || decoded?.id || decoded?._id || decoded?.sub;
+    if (!userId) return NextResponse.json({ error: "Unauthorized - Missing User ID" }, { status: 401 });
 
-    // Update name
-    if (name) user.name = name.trim();
+    const body = await req.json();
+    const { name, username, email, avatar } = body;
+    
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { name, username, email, avatar },
+      { new: true, runValidators: true }
+    ).select('-password');
 
-    // Update email
-    if (email && email !== user.email) {
-      const exists = await User.findOne({ email: email.toLowerCase() });
-      if (exists) return NextResponse.json({ error: 'Email already in use' }, { status: 409 });
-      user.email = email.toLowerCase();
-    }
-
-    // Update password
-    if (newPassword) {
-      if (!currentPassword) {
-        return NextResponse.json({ error: 'Current password is required to set a new one' }, { status: 400 });
-      }
-      const isMatch = await user.comparePassword(currentPassword);
-      if (!isMatch) return NextResponse.json({ error: 'Current password is incorrect' }, { status: 400 });
-      if (newPassword.length < 6) {
-        return NextResponse.json({ error: 'New password must be at least 6 characters' }, { status: 400 });
-      }
-      user.password = newPassword;
-    }
-
-    await user.save();
-
-    return NextResponse.json({
-      message: 'Profile updated successfully',
-      user: { id: user._id, name: user.name, email: user.email },
-    });
+    return NextResponse.json({ user: updatedUser, message: "Profile updated" }, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    if (error.code === 11000) {
+      const field = Object.keys(error.keyValue)[0];
+      return NextResponse.json({ error: `This ${field} is already in use.` }, { status: 400 });
+    }
+    return NextResponse.json({ error: error.message || "Server error or validation failed" }, { status: 500 });
   }
 }

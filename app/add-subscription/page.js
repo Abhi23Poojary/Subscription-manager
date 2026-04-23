@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Loader2, CheckCircle2, AlertCircle, Edit3, IndianRupee, Tag, Link as LinkIcon, RefreshCw, LogOut } from "lucide-react";
 import Sidebar from "@/app/sidebar/page";
+import NotificationBell from "@/app/notifications/page";
 import "./add-sub.css";
 
 export default function AddSubscriptionPage() {
@@ -74,8 +75,9 @@ export default function AddSubscriptionPage() {
       {/* Main Content Area */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', height: '100vh', zIndex: 1 }}>
         
-        {/* Top Right Logout Button */}
-        <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '2rem 2rem 0 2rem' }}>
+        {/* Top Right Header Elements */}
+        <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '2rem 2rem 0 2rem', gap: '1rem', alignItems: 'center' }}>
+          <NotificationBell />
           <button 
             onClick={handleLogout} 
             style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: 'rgba(239, 68, 68, 0.1)', color: '#ef4444', border: '1px solid rgba(239, 68, 68, 0.2)', padding: '0.5rem 1rem', borderRadius: '0.5rem', cursor: 'pointer', fontWeight: 500, transition: 'all 0.2s ease' }}

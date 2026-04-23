@@ -21,6 +21,7 @@ import {
   Legend
 } from "recharts";
 import { getCategorySpending, getMonthlyTrend } from "@/lib/subscriptionHelpers";
+import NotificationBell from "@/app/notifications/page";
 import Sidebar from "@/app/sidebar/page";
 
 import "./analytics.css";
@@ -88,14 +89,18 @@ export default function AnalyticsPage() {
         {/* Top Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
           <h1 style={{ fontSize: '2rem', fontWeight: 700, color: '#f8fafc', margin: 0 }}>Analytics</h1>
-          <button 
-            onClick={handleLogout} 
-            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: 'rgba(239, 68, 68, 0.1)', color: '#ef4444', border: '1px solid rgba(239, 68, 68, 0.2)', padding: '0.5rem 1rem', borderRadius: '0.5rem', cursor: 'pointer', fontWeight: 500, transition: 'all 0.2s ease' }}
-            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(239, 68, 68, 0.2)'}
-            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(239, 68, 68, 0.1)'}
-          >
-            <LogOut size={16} /> Logout
-          </button>
+          
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <NotificationBell />
+            <button 
+              onClick={handleLogout} 
+              style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: 'rgba(239, 68, 68, 0.1)', color: '#ef4444', border: '1px solid rgba(239, 68, 68, 0.2)', padding: '0.5rem 1rem', borderRadius: '0.5rem', cursor: 'pointer', fontWeight: 500, transition: 'all 0.2s ease' }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(239, 68, 68, 0.2)'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(239, 68, 68, 0.1)'}
+            >
+              <LogOut size={16} /> Logout
+            </button>
+          </div>
         </div>
 
         <div className="chartsGrid">
@@ -123,7 +128,7 @@ export default function AnalyticsPage() {
 
           {/* Spending Trend Chart */}
           <div className="chartCard">
-            <h3><TrendingUp size={20} color="#34d399" /> Spending Trend (Last 6 Months)</h3>
+            <h3><TrendingUp size={20} color="#34d399" /> Spending Trend (Year to Date)</h3>
             {trendData.length === 0 ? (
               <p style={{ color: '#9ca3af', textAlign: 'center', marginTop: '2rem' }}>No trend data available.</p>
             ) : (
